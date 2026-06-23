@@ -1,0 +1,125 @@
+// Arshin Kids — Prisma 7 schema (PrismaPg adapter + Neon Postgres).
+// CLAUDE.md §1: DB is unreachable from local Iran — DO NOT run `prisma migrate`
+// or `db push`. Apply DDL by hand in the Neon SQL console (see prisma/init.sql),
+// keep this file in sync, then `npx prisma generate` locally (offline-safe).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// Admin CMS users (hand-rolled JWT auth — CLAUDE.md §5).
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  createdAt    DateTime @default(now())
+
+  @@map("admin_users")
+}
+
+/// Enrollment / contact leads from the public form.
+model Lead {
+  id             String     @id @default(cuid())
+  parentName     String
+  phone          String
+  childName      String?
+  childBirthYear Int? // Persian (Jalali) birth year, e.g. 1400
+  program        String? // free text or program slug
+  message        String?
+  service        String     @default("enroll") // discriminator: enroll | contact
+  status         LeadStatus @default(NEW)
+  createdAt      DateTime   @default(now())
+  readAt         DateTime?
+
+  @@index([status, createdAt])
+  @@map("leads")
+}
+
+enum LeadStatus {
+  NEW
+  READ
+  CONTACTED
+  ARCHIVED
+}
+
+/// Programs / classes offered (age groups, services).
+model Program {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  summary     String // short card text
+  description String? // long body (page)
+  ageRange    String? // e.g. "۳ تا ۴ سال"
+  color       String   @default("accent") // token name for the card accent
+  icon        String? // lucide icon name
+  imageUrl    String?
+  order       Int      @default(0)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([published, order])
+  @@map("programs")
+}
+
+/// Staff / teachers.
+model StaffMember {
+  id        String   @id @default(cuid())
+  name      String
+  role      String // e.g. "مدیر" / "مربی"
+  bio       String?
+  photoUrl  String?
+  order     Int      @default(0)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@index([published, order])
+  @@map("staff")
+}
+
+/// Photo gallery images (Vercel Blob URLs).
+model GalleryImage {
+  id        String   @id @default(cuid())
+  url       String
+  caption   String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([order])
+  @@map("gallery")
+}
+
+/// News / announcements (blog-style).
+model Post {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  title       String
+  excerpt     String?
+  content     String // markdown / HTML
+  coverUrl    String?
+  published   Boolean   @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([published, publishedAt])
+  @@map("posts")
+}
+
+/// Frequently asked questions (also feeds FAQPage JSON-LD).
+model Faq {
+  id        String  @id @default(cuid())
+  question  String
+  answer    String
+  order     Int     @default(0)
+  published Boolean @default(true)
+
+  @@index([published, order])
+  @@map("faqs")
+}

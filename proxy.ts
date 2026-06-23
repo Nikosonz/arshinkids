@@ -1,0 +1,44 @@
+import { NextResponse, type NextRequest } from "next/server";
+import { decrypt } from "@/lib/jwt";
+
+/**
+ * Proxy (formerly middleware — Next 16 renamed it; NEVER add middleware.ts too).
+ * Runs on Node.js runtime by default in v16. CLAUDE.md §3/§5.
+ *
+ *  1. www → apex 308 redirect
+ *  2. Server-side admin gate: /admin* (except /admin/login) requires a valid
+ *     session cookie. This is the REAL protection (UI does not enforce auth).
+ *
+ * Single locale (Farsi) — no root locale redirect needed; "/" is the home page.
+ */
+export async function proxy(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+  const host = req.headers.get("host") ?? "";
+
+  // 1. www → apex
+  if (host.startsWith("www.")) {
+    const url = req.nextUrl.clone();
+    url.host = host.replace(/^www\./, "");
+    return NextResponse.redirect(url, 308);
+  }
+
+  // 2. admin gate
+  if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
+    const session = await decrypt(req.cookies.get("session")?.value);
+    if (!session?.userId) {
+      const url = req.nextUrl.clone();
+      url.pathname = "/admin/login";
+      url.searchParams.set("next", pathname);
+      return NextResponse.redirect(url);
+    }
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  // Run on everything except static assets, image optimizer, and known metadata files.
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|og.png|robots.txt|sitemap.xml|llms.txt).*)",
+  ],
+};

@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+/* =========================================================================
+   Design tokens — never hardcode hex in className; use var(--token).
+   Warm, playful, trustworthy kindergarten palette. CLAUDE.md §6.
+   ========================================================================= */
+:root {
+  --background: #fffdf8; /* warm cream */
+  --surface: #ffffff;
+  --surface-2: #fff6ea; /* soft warm panel */
+  --border: #f1e7d6;
+
+  --text-primary: #2b2622;
+  --text-muted: #756c5f;
+
+  /* primary brand — sunny orange */
+  --accent: #f97a1f;
+  --accent-hover: #e96510;
+  --accent-subtle: #fff1e3;
+  --accent-contrast: #ffffff;
+
+  /* secondary — friendly sky blue */
+  --secondary: #2bb3e6;
+  --secondary-subtle: #e6f7fe;
+
+  /* playful supporting colors for program/category chips */
+  --fun-green: #4ec07a;
+  --fun-pink: #f06ea9;
+  --fun-yellow: #f7c64b;
+  --fun-purple: #9b7be6;
+
+  --radius: 1rem;
+  --radius-lg: 1.5rem;
+  --shadow-soft: 0 6px 24px -8px rgb(43 38 34 / 0.12);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-text-primary: var(--text-primary);
+  --color-text-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-subtle: var(--accent-subtle);
+  --color-secondary: var(--secondary);
+  --color-secondary-subtle: var(--secondary-subtle);
+  --color-fun-green: var(--fun-green);
+  --color-fun-pink: var(--fun-pink);
+  --color-fun-yellow: var(--fun-yellow);
+  --color-fun-purple: var(--fun-purple);
+
+  --font-body: var(--font-vazirmatn);
+  --font-heading: var(--font-vazirmatn);
+  --font-farsi: var(--font-vazirmatn);
+
+  --radius-DEFAULT: var(--radius);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-vazirmatn), Tahoma, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Isolate mixed-direction runs (phone numbers, Latin words inside Farsi). */
+.bidi-plaintext {
+  unicode-bidi: plaintext;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

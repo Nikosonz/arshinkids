@@ -1,0 +1,36 @@
+import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/business";
+import { getPrograms, getPosts } from "@/lib/data";
+
+// Fixed build date for static routes — NEVER use new Date() per crawl, or
+// <lastmod> churns to "now" every time. CLAUDE.md §8.
+const BUILD_DATE = new Date("2026-06-23");
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const staticRoutes = ["", "/programs", "/about", "/gallery", "/news", "/contact"];
+
+  const base: MetadataRoute.Sitemap = staticRoutes.map((path) => ({
+    url: `${SITE_URL}${path}`,
+    lastModified: BUILD_DATE,
+    changeFrequency: "weekly",
+    priority: path === "" ? 1 : 0.7,
+  }));
+
+  const [programs, posts] = await Promise.all([getPrograms(), getPosts()]);
+
+  const programUrls: MetadataRoute.Sitemap = programs.map((p) => ({
+    url: `${SITE_URL}/programs/${p.slug}`,
+    lastModified: p.updatedAt,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
+  const postUrls: MetadataRoute.Sitemap = posts.map((p) => ({
+    url: `${SITE_URL}/news/${p.slug}`,
+    lastModified: p.updatedAt,
+    changeFrequency: "monthly",
+    priority: 0.5,
+  }));
+
+  return [...base, ...programUrls, ...postUrls];
+}
