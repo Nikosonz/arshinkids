@@ -37,6 +37,9 @@ yarn-error.log*
 # generated prisma client (rebuilt by `prisma generate` on every Vercel build)
 /lib/generated
 
+# local-only secrets (admin INSERT with password hash) — never commit
+*.local.sql
+
 # vercel
 .vercel
 
