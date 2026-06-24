@@ -1,9 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { put, del } from "@vercel/blob";
+import { del } from "@vercel/blob";
 import { prisma } from "@/lib/db";
 import { requireAdmin } from "@/lib/server/auth";
+import { putImage } from "@/lib/server/blob";
 
 function revalidate() {
   revalidatePath("/admin/gallery");
@@ -34,13 +35,10 @@ export async function uploadGalleryImage(
   }
 
   try {
-    const safeName = file.name.replace(/[^a-zA-Z0-9.\-]/g, "_");
-    const blob = await put(`gallery/${Date.now()}-${safeName}`, file, {
-      access: "public",
-    });
+    const url = await putImage("gallery", file);
     await prisma.galleryImage.create({
       data: {
-        url: blob.url,
+        url,
         caption: String(fd.get("caption") ?? "").trim() || null,
         order: Number.parseInt(String(fd.get("order") ?? ""), 10) || 0,
       },

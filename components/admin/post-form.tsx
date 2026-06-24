@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Field, Input, Textarea, SubmitButton } from "@/components/admin/ui";
+import { ImageUpload } from "@/components/admin/image-upload";
 
 export interface PostFormValues {
   slug?: string;
@@ -36,9 +37,13 @@ export function PostForm({
         <Textarea id="content" name="content" rows={10} defaultValue={values.content} required />
       </Field>
 
-      <Field label="نشانی تصویر کاور" htmlFor="coverUrl" hint="اختیاری — از گالری آپلود کنید">
-        <Input id="coverUrl" name="coverUrl" dir="ltr" className="text-right" defaultValue={values.coverUrl ?? ""} />
-      </Field>
+      <ImageUpload
+        name="coverUrl"
+        folder="news"
+        defaultUrl={values.coverUrl ?? ""}
+        label="تصویر کاور"
+        hint="اختیاری — یک تصویر آپلود کنید"
+      />
 
       <label className="flex items-center gap-2 text-sm font-medium">
         <input type="checkbox" name="published" defaultChecked={values.published ?? false} className="h-4 w-4" />

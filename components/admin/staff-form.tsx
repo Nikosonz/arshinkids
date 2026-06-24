@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Field, Input, Textarea, SubmitButton } from "@/components/admin/ui";
+import { ImageUpload } from "@/components/admin/image-upload";
 
 export interface StaffFormValues {
   name?: string;
@@ -33,9 +34,13 @@ export function StaffForm({
       </Field>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="نشانی عکس" htmlFor="photoUrl" hint="اختیاری — از گالری آپلود کنید">
-          <Input id="photoUrl" name="photoUrl" dir="ltr" className="text-right" defaultValue={values.photoUrl ?? ""} />
-        </Field>
+        <ImageUpload
+          name="photoUrl"
+          folder="staff"
+          defaultUrl={values.photoUrl ?? ""}
+          label="عکس"
+          hint="اختیاری — یک تصویر آپلود کنید"
+        />
         <Field label="ترتیب نمایش" htmlFor="order">
           <Input id="order" name="order" type="number" defaultValue={values.order ?? 0} />
         </Field>
