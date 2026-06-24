@@ -117,7 +117,8 @@ export async function GET(req: NextRequest) {
     "| hasDbUrl:",
     !!(process.env.POSTGRES_PRISMA_URL || process.env.DATABASE_URL),
   );
-  if (!process.env.SETUP_KEY || key !== process.env.SETUP_KEY) {
+  const envKey = process.env.SETUP_KEY?.trim();
+  if (!envKey || key?.trim() !== envKey) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
