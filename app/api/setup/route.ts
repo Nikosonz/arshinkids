@@ -102,6 +102,21 @@ async function seedAdmin(log: string[]): Promise<void> {
 
 export async function GET(req: NextRequest) {
   const key = req.nextUrl.searchParams.get("key");
+  // Temporary diagnostic (no secret values logged — presence + length only).
+  console.log(
+    "[setup] SETUP_KEY present:",
+    !!process.env.SETUP_KEY,
+    "| env len:",
+    process.env.SETUP_KEY?.length ?? 0,
+    "| query len:",
+    key?.length ?? 0,
+    "| match:",
+    key === process.env.SETUP_KEY,
+    "| hasAdminEmail:",
+    !!process.env.SETUP_ADMIN_EMAIL,
+    "| hasDbUrl:",
+    !!(process.env.POSTGRES_PRISMA_URL || process.env.DATABASE_URL),
+  );
   if (!process.env.SETUP_KEY || key !== process.env.SETUP_KEY) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
