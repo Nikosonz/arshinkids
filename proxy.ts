@@ -5,24 +5,17 @@ import { decrypt } from "@/lib/jwt";
  * Proxy (formerly middleware — Next 16 renamed it; NEVER add middleware.ts too).
  * Runs on Node.js runtime by default in v16. CLAUDE.md §3/§5.
  *
- *  1. www → apex 308 redirect
- *  2. Server-side admin gate: /admin* (except /admin/login) requires a valid
- *     session cookie. This is the REAL protection (UI does not enforce auth).
+ *  - Server-side admin gate: /admin* (except /admin/login) requires a valid
+ *    session cookie. This is the REAL protection (UI does not enforce auth).
  *
- * Single locale (Farsi) — no root locale redirect needed; "/" is the home page.
+ * Host canonicalization (www vs apex) is handled by Vercel's Domains config, NOT
+ * here — having both fight each other causes an infinite redirect loop.
+ * Single locale (Farsi) — no root locale redirect; "/" is the home page.
  */
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const host = req.headers.get("host") ?? "";
 
-  // 1. www → apex
-  if (host.startsWith("www.")) {
-    const url = req.nextUrl.clone();
-    url.host = host.replace(/^www\./, "");
-    return NextResponse.redirect(url, 308);
-  }
-
-  // 2. admin gate
+  // admin gate
   if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
     const session = await decrypt(req.cookies.get("session")?.value);
     if (!session?.userId) {

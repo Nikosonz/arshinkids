@@ -7,7 +7,9 @@
  * the Google Business listing (address, phone, city, hours, geo, socials).
  */
 
-export const SITE_URL = "https://arshinkids.com";
+// Canonical host = www (Vercel serves www; apex 308-redirects to it).
+// Keep this in sync with the Vercel Domains "primary domain" setting.
+export const SITE_URL = "https://www.arshinkids.com";
 
 export const business = {
   /** Persian display name */
