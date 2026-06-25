@@ -24,7 +24,7 @@ export function localBusinessSchema() {
     alternateName: business.nameLatin,
     description: business.description,
     url: SITE_URL,
-    telephone: business.phone,
+    telephone: [business.phone, business.mobile],
     email: business.email,
     image: `${SITE_URL}/opengraph-image`,
     address: {
@@ -48,11 +48,15 @@ export function localBusinessSchema() {
       opens: h.opens,
       closes: h.closes,
     })),
-    ...(business.socials.instagram || business.socials.telegram
+    ...(business.socials.instagram ||
+    business.socials.telegram ||
+    business.socials.whatsapp
       ? {
-          sameAs: [business.socials.instagram, business.socials.telegram].filter(
-            Boolean,
-          ),
+          sameAs: [
+            business.socials.instagram,
+            business.socials.telegram,
+            business.socials.whatsapp,
+          ].filter(Boolean),
         }
       : {}),
   };

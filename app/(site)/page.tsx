@@ -55,8 +55,9 @@ export default async function HomePage() {
               جایی امن و شاد برای رشد و شکوفایی کودک شما
             </h1>
             <p className="mt-5 max-w-lg text-lg leading-9 text-[var(--text-muted)]">
-              در {business.name} با آموزش بازی‌محور، مراقبت دلسوزانه و فضایی پر از
-              مهر، کودکان را برای آینده‌ای روشن آماده می‌کنیم.
+              در {business.name}، واقع در جهانشهر کرج، با آموزش بازی‌محور، مراقبت
+              دلسوزانه و فضایی پر از مهر، کودکان را برای آینده‌ای روشن آماده
+              می‌کنیم.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -75,7 +76,7 @@ export default async function HomePage() {
             </div>
           </div>
 
-          {/* decorative hero panel (no external image needed yet) */}
+          {/* decorative hero panel */}
           <div className="relative hidden md:block">
             <div className="aspect-square rounded-[3rem] bg-[var(--accent-subtle)]" />
             <div
