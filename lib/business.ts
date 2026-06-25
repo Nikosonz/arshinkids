@@ -27,7 +27,7 @@ export const business = {
     street: "استان البرز-کرج-جهانشهر-میدان هلال احمر-خیابان فریما",
     city: "کرج",
     region: "البرز",
-    postalCode: "",
+    postalCode: "3144754797",
     country: "IR",
   },
   /** Google Maps coordinates */
