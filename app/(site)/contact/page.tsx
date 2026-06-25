@@ -67,6 +67,34 @@ export default async function ContactPage() {
           </div>
         </Container>
       </section>
+
+      {/* map */}
+      <section className="pb-16">
+        <Container>
+          <h2 className="mb-4 text-xl font-bold">موقعیت روی نقشه</h2>
+          <div className="overflow-hidden rounded-2xl border border-border">
+            <iframe
+              src={`https://www.openstreetmap.org/export/embed.html?bbox=${business.geo.lng - 0.006},${business.geo.lat - 0.004},${business.geo.lng + 0.006},${business.geo.lat + 0.004}&layer=mapnik&marker=${business.geo.lat},${business.geo.lng}`}
+              width="100%"
+              height="400"
+              style={{ border: 0, display: "block" }}
+              allowFullScreen
+              loading="lazy"
+              title="موقعیت مهدکودک آرشین"
+            />
+          </div>
+          <div className="mt-4 flex justify-center">
+            <a
+              href={`https://neshan.org/maps/places/@${business.geo.lat},${business.geo.lng},16z`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-xl bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-[var(--accent-contrast)] transition-colors hover:bg-[var(--accent-hover)]"
+            >
+              مسیریابی با نشان
+            </a>
+          </div>
+        </Container>
+      </section>
     </>
   );
 }
