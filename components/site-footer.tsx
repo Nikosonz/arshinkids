@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { MapPin, Phone, Mail, Clock, Camera, Send } from "lucide-react";
 import { navLinks } from "@/lib/nav";
 import { business } from "@/lib/business";
@@ -15,13 +16,13 @@ export function SiteFooter() {
         {/* brand */}
         <div>
           <div className="mb-3 flex items-center gap-2 text-lg font-bold">
-            <span
-              className="grid h-9 w-9 place-items-center rounded-full text-[var(--accent-contrast)]"
-              style={{ background: "var(--accent)" }}
-              aria-hidden
-            >
-              آ
-            </span>
+            <Image
+              src="/logo.jpg"
+              alt={business.name}
+              width={40}
+              height={40}
+              className="rounded-full object-cover"
+            />
             {business.name}
           </div>
           <p className="text-sm leading-7 text-[var(--text-muted)]">
