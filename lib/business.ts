@@ -20,7 +20,7 @@ export const business = {
   // --- NAP ---
   phone: "+982634450160",
   phoneDisplay: "۰۲۶-۳۴۴۵-۰۱۶۰",
-  email: "info@arshinkids.com",
+  email: "arshin.mahd@gmail.com",
   address: {
     street: "جهانشهر، میدان هلال احمر، خیابان فریما",
     city: "کرج",
