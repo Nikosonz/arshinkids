@@ -108,7 +108,7 @@ export function SiteFooter() {
           rel="noopener noreferrer"
           className="hover:text-[var(--accent)] transition-colors"
         >
-          pouyakarimi.ir
+          Pouya Karimi
         </a>
       </div>
     </footer>
