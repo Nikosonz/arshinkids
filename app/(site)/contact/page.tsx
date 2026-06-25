@@ -19,7 +19,7 @@ export default async function ContactPage() {
     { icon: MapPin, label: "نشانی", value: `${business.address.street}، ${business.address.city}` },
     { icon: Phone, label: "تلفن", value: business.phoneDisplay, href: `tel:${business.phone}`, ltr: true },
     { icon: Mail, label: "ایمیل", value: business.email, href: `mailto:${business.email}`, ltr: true },
-    { icon: Clock, label: "ساعات کاری", value: "شنبه تا چهارشنبه، ۷:۳۰ تا ۱۶" },
+    { icon: Clock, label: "ساعات کاری", value: "شنبه تا چهارشنبه، ۸ تا ۱۶" },
   ];
 
   return (

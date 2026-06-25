@@ -70,7 +70,7 @@ export function SiteFooter() {
             </li>
             <li className="flex items-center gap-2">
               <Clock className="h-4 w-4 shrink-0 text-[var(--accent)]" />
-              <span>شنبه تا چهارشنبه، ۷:۳۰ تا ۱۶</span>
+              <span>شنبه تا چهارشنبه، ۸ تا ۱۶</span>
             </li>
           </ul>
 
