@@ -100,7 +100,16 @@ export function SiteFooter() {
       </Container>
 
       <div className="border-t border-border py-5 text-center text-xs text-[var(--text-muted)]">
-        © {year} {business.name}. تمامی حقوق محفوظ است.
+        © {year} {business.name}. تمامی حقوق محفوظ است.{" "}
+        طراحی و توسعه:{" "}
+        <a
+          href="https://pouyakarimi.ir"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-[var(--accent)] transition-colors"
+        >
+          pouyakarimi.ir
+        </a>
       </div>
     </footer>
   );
