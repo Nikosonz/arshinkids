@@ -19,10 +19,10 @@ export const business = {
 
   // --- NAP ---
   phone: "+982634450160",
-  phoneDisplay: "۰۲۶-۳۴۴۵-۰۱۶۰",
+  phoneDisplay: "۰۲۶-۳۴۴۵۰۱۶۰",
   email: "arshin.mahd@gmail.com",
   address: {
-    street: "جهانشهر، میدان هلال احمر، خیابان فریما",
+    street: "استان البرز-کرج-جهانشهر-میدان هلال احمر-خیابان فریما",
     city: "کرج",
     region: "البرز",
     postalCode: "",

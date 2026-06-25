@@ -16,7 +16,7 @@ export default async function ContactPage() {
   const programs = await getPrograms();
 
   const info = [
-    { icon: MapPin, label: "نشانی", value: `${business.address.street}، ${business.address.city}` },
+    { icon: MapPin, label: "نشانی", value: business.address.street },
     { icon: Phone, label: "تلفن", value: business.phoneDisplay, href: `tel:${business.phone}`, ltr: true },
     { icon: Mail, label: "ایمیل", value: business.email, href: `mailto:${business.email}`, ltr: true },
     { icon: Clock, label: "ساعات کاری", value: "شنبه تا چهارشنبه، ۸ تا ۱۶" },

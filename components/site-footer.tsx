@@ -52,9 +52,7 @@ export function SiteFooter() {
           <ul className="space-y-3 text-sm text-[var(--text-muted)]">
             <li className="flex items-start gap-2">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[var(--accent)]" />
-              <span>
-                {business.address.street}، {business.address.city}
-              </span>
+              <span>{business.address.street}</span>
             </li>
             <li className="flex items-center gap-2">
               <Phone className="h-4 w-4 shrink-0 text-[var(--accent)]" />
