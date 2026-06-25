@@ -14,7 +14,7 @@ export function JsonLd({ data }: { data: object }) {
 
 /** LocalBusiness schema for a kindergarten (Preschool + ChildCare). */
 export function localBusinessSchema() {
-  const hasGeo = business.geo.lat !== 0 && business.geo.lng !== 0;
+  const hasGeo = Boolean(business.geo.lat) && Boolean(business.geo.lng);
 
   return {
     "@context": "https://schema.org",

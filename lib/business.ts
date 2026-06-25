@@ -2,9 +2,6 @@
  * Single source of truth for NAP (Name / Address / Phone) and other business
  * facts. Used by the footer, contact page, JSON-LD schema, and metadata so
  * everything stays consistent. § CLAUDE.md §8.
- *
- * TODO(owner): replace the placeholder values below with the real details from
- * the Google Business listing (address, phone, city, hours, geo, socials).
  */
 
 // Canonical host = www (Vercel serves www; apex 308-redirects to it).
@@ -16,34 +13,34 @@ export const business = {
   name: "مهدکودک آرشین",
   /** Latin name for schema / OG */
   nameLatin: "Arshin Kids",
-  tagline: "مهدکودک و پیش‌دبستانی آرشین", // TODO: confirm wording
+  tagline: "مهدکودک و پیش‌دبستانی آرشین",
   description:
-    "مهدکودک آرشین، محیطی امن، شاد و آموزشی برای رشد و شکوفایی کودکان شما.", // TODO: confirm
+    "مهدکودک آرشین، محیطی امن، شاد و آموزشی برای رشد و شکوفایی کودکان شما.",
 
-  // --- NAP (TODO: fill from real listing) ---
-  phone: "+98-000-000-0000", // TODO
-  phoneDisplay: "۰۰۰ ۰۰۰ ۰۰۰۰", // TODO Persian display
-  email: "info@arshinkids.com", // TODO confirm
+  // --- NAP ---
+  phone: "+982634450160",
+  phoneDisplay: "۰۲۶-۳۴۴۵-۰۱۶۰",
+  email: "info@arshinkids.com",
   address: {
-    street: "TODO نشانی کامل", // TODO
-    city: "TODO شهر", // TODO
-    region: "TODO استان", // TODO
-    postalCode: "", // TODO
+    street: "جهانشهر، میدان هلال احمر، خیابان فریما، مهدکودک آرشین",
+    city: "کرج",
+    region: "البرز",
+    postalCode: "",
     country: "IR",
   },
-  /** Map coordinates — TODO from Google Maps listing */
+  /** Google Maps coordinates */
   geo: {
-    lat: 0, // TODO
-    lng: 0, // TODO
+    lat: 35.82599204195466,
+    lng: 50.98599854418575,
   },
-  /** Opening hours in schema.org format. TODO confirm real hours. */
+  /** Opening hours in schema.org format — شنبه تا چهارشنبه ۸ تا ۱۶ */
   openingHours: [
-    { days: ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday"], opens: "07:30", closes: "16:00" },
+    { days: ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday"], opens: "08:00", closes: "16:00" },
   ],
 
   socials: {
-    instagram: "", // TODO e.g. https://instagram.com/...
-    telegram: "", // TODO
-    whatsapp: "", // TODO
+    instagram: "https://www.instagram.com/arshinkids/",
+    telegram: "https://t.me/arshin_mahd",
+    whatsapp: "",
   },
 } as const;
