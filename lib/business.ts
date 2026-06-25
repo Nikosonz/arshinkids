@@ -22,7 +22,7 @@ export const business = {
   phoneDisplay: "۰۲۶-۳۴۴۵-۰۱۶۰",
   email: "info@arshinkids.com",
   address: {
-    street: "جهانشهر، میدان هلال احمر، خیابان فریما، مهدکودک آرشین",
+    street: "جهانشهر، میدان هلال احمر، خیابان فریما",
     city: "کرج",
     region: "البرز",
     postalCode: "",
