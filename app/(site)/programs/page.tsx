@@ -7,7 +7,7 @@ import { getPrograms } from "@/lib/data";
 export const metadata: Metadata = {
   title: "برنامه‌ها",
   description:
-    "برنامه‌ها و گروه‌های سنی مهدکودک آرشین، از شیرخوارگاه تا پیش‌دبستانی.",
+    "برنامه‌ها و گروه‌های سنی نوباوه آرشین، از شیرخوارگاه تا پیش‌دبستانی.",
   alternates: { canonical: "/programs" },
 };
 
