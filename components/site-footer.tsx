@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Phone, Mail, Clock, Camera, Send } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Camera, Send, MessageCircle } from "lucide-react";
 import { navLinks } from "@/lib/nav";
 import { business } from "@/lib/business";
 import { Container } from "./container";
@@ -62,6 +62,12 @@ export function SiteFooter() {
               </a>
             </li>
             <li className="flex items-center gap-2">
+              <Phone className="h-4 w-4 shrink-0 text-[var(--accent)]" />
+              <a href={`tel:${business.mobile}`} className="bidi-plaintext">
+                {business.mobileDisplay}
+              </a>
+            </li>
+            <li className="flex items-center gap-2">
               <Mail className="h-4 w-4 shrink-0 text-[var(--accent)]" />
               <a href={`mailto:${business.email}`} className="bidi-plaintext">
                 {business.email}
@@ -73,7 +79,7 @@ export function SiteFooter() {
             </li>
           </ul>
 
-          {(business.socials.instagram || business.socials.telegram) && (
+          {(business.socials.instagram || business.socials.telegram || business.socials.whatsapp) && (
             <div className="mt-4 flex gap-3">
               {business.socials.instagram && (
                 <a
@@ -91,6 +97,17 @@ export function SiteFooter() {
                   className="grid h-9 w-9 place-items-center rounded-full bg-[var(--surface)] text-[var(--accent)]"
                 >
                   <Send className="h-4 w-4" />
+                </a>
+              )}
+              {business.socials.whatsapp && (
+                <a
+                  href={business.socials.whatsapp}
+                  aria-label="واتساپ"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="grid h-9 w-9 place-items-center rounded-full bg-[var(--surface)] text-[var(--accent)]"
+                >
+                  <MessageCircle className="h-4 w-4" />
                 </a>
               )}
             </div>

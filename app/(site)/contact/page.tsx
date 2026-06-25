@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, MessageCircle } from "lucide-react";
 import { Container } from "@/components/container";
 import { PageHero } from "@/components/page-hero";
 import { EnrollForm } from "@/components/enroll-form";
@@ -17,7 +17,9 @@ export default async function ContactPage() {
 
   const info = [
     { icon: MapPin, label: "نشانی", value: business.address.street },
-    { icon: Phone, label: "تلفن", value: business.phoneDisplay, href: `tel:${business.phone}`, ltr: true },
+    { icon: Phone, label: "تلفن ثابت", value: business.phoneDisplay, href: `tel:${business.phone}`, ltr: true },
+    { icon: Phone, label: "موبایل", value: business.mobileDisplay, href: `tel:${business.mobile}`, ltr: true },
+    { icon: MessageCircle, label: "واتساپ", value: business.mobileDisplay, href: business.socials.whatsapp, ltr: true },
     { icon: Mail, label: "ایمیل", value: business.email, href: `mailto:${business.email}`, ltr: true },
     { icon: Clock, label: "ساعات کاری", value: "شنبه تا چهارشنبه، ۸ تا ۱۶" },
   ];

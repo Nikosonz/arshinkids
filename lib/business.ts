@@ -20,6 +20,8 @@ export const business = {
   // --- NAP ---
   phone: "+982634450160",
   phoneDisplay: "۰۲۶-۳۴۴۵۰۱۶۰",
+  mobile: "+989190333553",
+  mobileDisplay: "۰۹۱۹۰۳۳۳۵۵۳",
   email: "arshin.mahd@gmail.com",
   address: {
     street: "استان البرز-کرج-جهانشهر-میدان هلال احمر-خیابان فریما",
@@ -41,6 +43,6 @@ export const business = {
   socials: {
     instagram: "https://www.instagram.com/arshinkids/",
     telegram: "https://t.me/arshin_mahd",
-    whatsapp: "",
+    whatsapp: "https://wa.me/989190333553",
   },
 } as const;
