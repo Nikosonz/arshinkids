@@ -1,0 +1,335 @@
+{
+  "summary": {
+    "health_score": 66,
+    "business_type": "Local Service — Brick-and-mortar Kindergarten/Preschool (Karaj, Alborz, Iran)",
+    "top_findings": [
+      "llms.txt missing — AI crawlers can't understand site structure",
+      "About page has placeholder TODO text — not real content",
+      "No published news/blog content — zero fresh content signal",
+      "No Google Business Profile verified or referenced",
+      "postalCode empty in NAP and schema"
+    ],
+    "quick_wins": [
+      "Create public/llms.txt (15 min)",
+      "Delete stale create-next-app SVGs from /public (2 min)",
+      "Add mobile phone to LocalBusiness schema (5 min)",
+      "Add WhatsApp to sameAs in schema (5 min)",
+      "Fix empty postalCode in business.ts (2 min)"
+    ]
+  },
+  "categories": [
+    {
+      "name": "Technical SEO",
+      "score": 78,
+      "what_works": [
+        "robots.txt correct with AI bot allowlist",
+        "Dynamic XML sitemap with fixed BUILD_DATE",
+        "Full security headers (HSTS, nosniff, X-Frame-Options, Referrer-Policy, Permissions-Policy)",
+        "lang=fa dir=rtl declared",
+        "Self-hosted Vazirmatn font — no render-blocking",
+        "Modern browserslist",
+        "ISR caching"
+      ],
+      "findings": [
+        {
+          "title": "No Content-Security-Policy header",
+          "severity": "Medium",
+          "description": "CSP is absent from next.config.ts. Without it, XSS attacks can inject arbitrary scripts.",
+          "recommendation": "Add CSP header to securityHeaders array in next.config.ts. Allow 'self', 'unsafe-inline' for scripts, openstreetmap.org for frames."
+        },
+        {
+          "title": "llms.txt missing",
+          "severity": "High",
+          "description": "/public/llms.txt does not exist. AI search platforms use this to understand site structure.",
+          "recommendation": "Create public/llms.txt with H1 summary and Markdown links to all key pages."
+        },
+        {
+          "title": "Stale create-next-app SVGs in /public",
+          "severity": "Low",
+          "description": "file.svg, globe.svg, next.svg, vercel.svg, window.svg are unused but publicly accessible.",
+          "recommendation": "Delete these 5 files."
+        },
+        {
+          "title": "Framer Motion not using LazyMotion",
+          "severity": "Medium",
+          "description": "framer-motion ~104KB is in dependencies. If imported directly, it loads on every page.",
+          "recommendation": "If unused, remove the package. If used, switch to LazyMotion + m + domAnimation."
+        }
+      ]
+    },
+    {
+      "name": "Content Quality",
+      "score": 58,
+      "what_works": [
+        "All copy in Farsi — correct for target audience",
+        "Good program descriptions with age ranges",
+        "Enrollment form captures all parent/child fields"
+      ],
+      "findings": [
+        {
+          "title": "About page has placeholder TODO text",
+          "severity": "High",
+          "description": "Real kindergarten story/history is not written. A TODO comment in the source marks the placeholder.",
+          "recommendation": "Owner to provide: founding year, team size, capacity, story. Replace generic template paragraph."
+        },
+        {
+          "title": "Meta descriptions thin or generic",
+          "severity": "High",
+          "description": "About page meta: 34 chars. All pages use short, generic descriptions without local keywords.",
+          "recommendation": "Write unique 120-160 char meta descriptions per page with local keywords (کرج, جهانشهر)."
+        },
+        {
+          "title": "No published news content",
+          "severity": "High",
+          "description": "News page is empty. Zero fresh content = no crawl frequency signal and no long-tail coverage.",
+          "recommendation": "Publish 3-5 posts via /admin/news/new. Topics: facility events, child development tips, program announcements."
+        },
+        {
+          "title": "Gallery empty",
+          "severity": "Medium",
+          "description": "Gallery page has no photos. Parents researching childcare heavily rely on facility photos.",
+          "recommendation": "Upload 8-12 photos of classrooms, outdoor space, activities via /admin/gallery."
+        },
+        {
+          "title": "No staff profiles",
+          "severity": "Medium",
+          "description": "Staff grid is hidden (DB empty). Staff bios build E-E-A-T for a childcare business.",
+          "recommendation": "Add 3-5 staff members with name, role, photo, bio via /admin/staff/new."
+        }
+      ]
+    },
+    {
+      "name": "On-Page SEO",
+      "score": 73,
+      "what_works": [
+        "Unique page title template (%s | brand)",
+        "Single H1 on every page",
+        "Internal linking between key pages",
+        "CTA buttons throughout"
+      ],
+      "findings": [
+        {
+          "title": "No breadcrumb navigation",
+          "severity": "Medium",
+          "description": "Program detail pages only have a text back-link. No breadcrumb trail for Google sitelinks.",
+          "recommendation": "Add BreadcrumbList schema + visible breadcrumb component on program pages and news posts."
+        },
+        {
+          "title": "Homepage H1 misses geo keywords",
+          "severity": "Low",
+          "description": "H1: 'جایی امن و شاد برای رشد...' is emotional but misses 'مهدکودک کرج' keyword.",
+          "recommendation": "Consider: 'مهدکودک آرشین — محیطی امن و شاد در کرج' or add geo mention to subtitle."
+        }
+      ]
+    },
+    {
+      "name": "Schema / Structured Data",
+      "score": 72,
+      "what_works": [
+        "LocalBusiness dual-type Preschool+ChildCare on homepage",
+        "GeoCoordinates included",
+        "OpeningHoursSpecification correct",
+        "FAQPage schema wired up",
+        "sameAs with Instagram and Telegram"
+      ],
+      "findings": [
+        {
+          "title": "postalCode empty string in schema",
+          "severity": "High",
+          "description": "postalCode: '' outputs invalid empty string in JSON-LD. Google may flag this.",
+          "recommendation": "Set real 10-digit postal code in business.ts, or ensure the || undefined fallback works."
+        },
+        {
+          "title": "No BreadcrumbList schema",
+          "severity": "High",
+          "description": "Inner pages have no breadcrumb structured data — missed rich result opportunity.",
+          "recommendation": "Add BreadcrumbList JSON-LD to program detail pages and news posts."
+        },
+        {
+          "title": "WhatsApp missing from sameAs",
+          "severity": "Medium",
+          "description": "business.socials.whatsapp is set but not included in localBusinessSchema sameAs array.",
+          "recommendation": "Add whatsapp to the sameAs filter in lib/seo.tsx."
+        },
+        {
+          "title": "Mobile phone not in schema",
+          "severity": "Medium",
+          "description": "Schema only lists landline. Mobile +989190333553 is displayed on site but absent from JSON-LD.",
+          "recommendation": "Add business.mobile to telephone in localBusinessSchema."
+        },
+        {
+          "title": "No BlogPosting schema on news posts",
+          "severity": "Medium",
+          "description": "News post pages have no structured data markup.",
+          "recommendation": "Add BlogPosting schema to app/(site)/news/[slug]/page.tsx."
+        }
+      ]
+    },
+    {
+      "name": "Performance (CWV)",
+      "score": 72,
+      "what_works": [
+        "Self-hosted fonts — no render-blocking",
+        "next/image with WebP/AVIF auto-conversion",
+        "ISR edge caching",
+        "Modern browserslist"
+      ],
+      "findings": [
+        {
+          "title": "Framer Motion bundle impact",
+          "severity": "High",
+          "description": "framer-motion ~104KB in dependencies. If not using LazyMotion, loads on every page first paint.",
+          "recommendation": "Remove if unused, or implement LazyMotion + domAnimation."
+        },
+        {
+          "title": "OpenStreetMap iframe performance",
+          "severity": "Medium",
+          "description": "iframe loads third-party JS/CSS on contact page. loading=lazy is set (good) but still a network dependency.",
+          "recommendation": "Wrap in IntersectionObserver reveal if CLS/LCP is impacted. Current lazy loading is adequate."
+        }
+      ]
+    },
+    {
+      "name": "AI Search Readiness",
+      "score": 42,
+      "what_works": [
+        "robots.txt allows all major AI crawlers",
+        "LocalBusiness JSON-LD gives structured facts for AI extraction",
+        "NAP consistent and machine-readable"
+      ],
+      "findings": [
+        {
+          "title": "llms.txt missing",
+          "severity": "Critical",
+          "description": "No llms.txt. AI platforms use this to understand site structure. Required per CLAUDE.md §8.",
+          "recommendation": "Create public/llms.txt with Farsi summary + Markdown links to all key pages."
+        },
+        {
+          "title": "About page lacks citable facts",
+          "severity": "High",
+          "description": "AI models cite specific facts (founding year, capacity, ratios). Current about page has none.",
+          "recommendation": "Add factual claims: founding year, capacity, teacher:child ratio, certifications."
+        },
+        {
+          "title": "Entity signals weak",
+          "severity": "Medium",
+          "description": "Schema has @id but no legalName, foundingDate, or numberOfEmployees.",
+          "recommendation": "Add these to localBusinessSchema() when owner provides data."
+        }
+      ]
+    },
+    {
+      "name": "Images",
+      "score": 68,
+      "what_works": [
+        "OG image 1200x630 via opengraph-image.tsx",
+        "next/image used throughout",
+        "Logo has proper alt text"
+      ],
+      "findings": [
+        {
+          "title": "Stale SVGs in /public",
+          "severity": "Low",
+          "description": "5 unused SVGs from create-next-app scaffold remain in /public.",
+          "recommendation": "Delete: file.svg, globe.svg, next.svg, vercel.svg, window.svg"
+        },
+        {
+          "title": "OG image text is Latin-only",
+          "severity": "Low",
+          "description": "opengraph-image.tsx uses Latin text only (Persian font rendering limitation). Documented limitation.",
+          "recommendation": "Acceptable limitation. Could be replaced with a static 1200x630 JPEG with Persian text if desired."
+        }
+      ]
+    },
+    {
+      "name": "Local SEO",
+      "score": 62,
+      "what_works": [
+        "NAP from single source (business.ts) — consistent everywhere",
+        "GeoCoordinates in schema",
+        "OpenStreetMap + Neshan on contact page",
+        "Two phone numbers + WhatsApp",
+        "OpeningHours in schema"
+      ],
+      "findings": [
+        {
+          "title": "No Google Business Profile",
+          "severity": "High",
+          "description": "GBP is the #1 local ranking signal for brick-and-mortar businesses. Not verified/referenced.",
+          "recommendation": "Claim/verify GBP for 'مهدکودک آرشین' at maps.google.com (use VPN from Iran)."
+        },
+        {
+          "title": "postalCode missing",
+          "severity": "High",
+          "description": "Empty postalCode weakens NAP citation consistency and local schema.",
+          "recommendation": "Add real 10-digit Iranian postal code to business.ts."
+        },
+        {
+          "title": "Mobile phone not in schema telephone field",
+          "severity": "Medium",
+          "description": "Only landline in schema. Mobile shown on site but not in JSON-LD.",
+          "recommendation": "Add to LocalBusiness schema telephone array."
+        },
+        {
+          "title": "No local geo keywords in page copy",
+          "severity": "Medium",
+          "description": "Body text doesn't mention کرج or جهانشهر — only in address field.",
+          "recommendation": "Add 'در جهانشهر کرج' to homepage subtitle or about page intro."
+        }
+      ]
+    }
+  ],
+  "action_plan": {
+    "phases": [
+      {
+        "name": "Phase 1: Quick Wins (This Week)",
+        "timeframe": "Week 1",
+        "items": [
+          "Create public/llms.txt",
+          "Delete 5 stale SVGs from /public",
+          "Add mobile phone + WhatsApp to LocalBusiness schema",
+          "Fix postalCode in business.ts (get real code from owner)",
+          "Add local keyword 'کرج' to homepage subtitle",
+          "Fix Framer Motion: remove or switch to LazyMotion"
+        ]
+      },
+      {
+        "name": "Phase 2: Content (Weeks 2-3)",
+        "timeframe": "Weeks 2-3",
+        "items": [
+          "Owner writes real About page content",
+          "Publish 3-5 news posts via admin CMS",
+          "Upload gallery photos (8-12 images)",
+          "Add staff profiles (3-5 members)",
+          "Write unique meta descriptions for all pages",
+          "Add BreadcrumbList schema to program + news pages"
+        ]
+      },
+      {
+        "name": "Phase 3: Authority & Local (Month 2)",
+        "timeframe": "Month 2",
+        "items": [
+          "Claim/verify Google Business Profile (VPN required from Iran)",
+          "Add BlogPosting schema to news post template",
+          "Add CSP header to next.config.ts",
+          "Add factual citable content to About page",
+          "Collect and display customer reviews"
+        ]
+      },
+      {
+        "name": "Phase 4: Monitor & Iterate",
+        "timeframe": "Ongoing",
+        "items": [
+          "Check PageSpeed Insights from non-Iranian IP after each deploy",
+          "Publish news posts monthly",
+          "Monitor Vercel deployment logs for errors",
+          "Check sitemap in Google Search Console after GBP verified"
+        ]
+      }
+    ]
+  },
+  "artifacts": {
+    "findings_dir": "findings/",
+    "screenshots_dir": "screenshots/"
+  }
+}

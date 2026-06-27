@@ -19,6 +19,11 @@ export function faToEn(input: string): string {
     .replace(/[٠-٩]/g, (d) => String("٠١٢٣٤٥٦٧٨٩".indexOf(d)));
 }
 
+/** Format a Toman price with Persian digits + thousands separators, e.g. "۲۵۰٬۰۰۰ تومان". */
+export function formatPrice(toman: number): string {
+  return `${toFa(toman.toLocaleString("en-US"))} تومان`;
+}
+
 /** Format a date as a Persian (Jalali) date string, e.g. "۱۴۰۳ شهریور ۲". */
 export function formatDate(date: Date | string): string {
   const d = typeof date === "string" ? new Date(date) : date;

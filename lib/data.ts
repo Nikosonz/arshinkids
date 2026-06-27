@@ -81,3 +81,32 @@ export function getFaqs() {
     [],
   );
 }
+
+export function getCourses() {
+  return safe(
+    () =>
+      prisma.course.findMany({
+        where: { published: true },
+        orderBy: { order: "asc" },
+        include: { _count: { select: { lessons: true } } },
+      }),
+    [],
+  );
+}
+
+export function getCourse(slug: string) {
+  return safe(
+    () =>
+      prisma.course.findFirst({
+        where: { slug, published: true },
+        include: {
+          sections: {
+            orderBy: { order: "asc" },
+            include: { lessons: { orderBy: { order: "asc" } } },
+          },
+          lessons: { orderBy: { order: "asc" } },
+        },
+      }),
+    null,
+  );
+}

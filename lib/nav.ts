@@ -2,6 +2,7 @@
 export const navLinks = [
   { href: "/", label: "خانه" },
   { href: "/programs", label: "برنامه‌ها" },
+  { href: "/courses", label: "دوره‌ها" },
   { href: "/about", label: "درباره ما" },
   { href: "/gallery", label: "گالری" },
   { href: "/news", label: "اخبار" },

@@ -123,3 +123,63 @@ model Faq {
   @@index([published, order])
   @@map("faqs")
 }
+
+/// Video courses — lessons hosted on Aparat (we store the video hash + embed).
+/// `accessType` splits the public /courses page into free vs purchasable.
+model Course {
+  id          String     @id @default(cuid())
+  slug        String     @unique
+  title       String
+  summary     String // short card text
+  description String? // long body (landing page)
+  coverUrl    String?
+  accessType  AccessType @default(FREE)
+  price       Int? // Toman; null for free courses
+  published   Boolean    @default(false)
+  order       Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  sections CourseSection[]
+  lessons  Lesson[]
+
+  @@index([published, order])
+  @@map("courses")
+}
+
+enum AccessType {
+  FREE
+  PAID
+}
+
+/// Optional grouping of lessons within a course (e.g. "فصل اول").
+model CourseSection {
+  id       String @id @default(cuid())
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title    String
+  order    Int    @default(0)
+
+  lessons Lesson[]
+
+  @@index([courseId, order])
+  @@map("course_sections")
+}
+
+/// A single video lesson (Aparat-hosted).
+model Lesson {
+  id            String         @id @default(cuid())
+  courseId      String
+  course        Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  sectionId     String?
+  section       CourseSection? @relation(fields: [sectionId], references: [id], onDelete: SetNull)
+  title         String
+  aparatHash    String // Aparat video hash, parsed from the pasted link
+  durationSec   Int?
+  isFreePreview Boolean        @default(false) // free sample inside a PAID course
+  order         Int            @default(0)
+  createdAt     DateTime       @default(now())
+
+  @@index([courseId, order])
+  @@map("lessons")
+}

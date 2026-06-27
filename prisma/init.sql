@@ -102,3 +102,45 @@ CREATE TABLE IF NOT EXISTS "faqs" (
   "published" boolean NOT NULL DEFAULT true
 );
 CREATE INDEX IF NOT EXISTS "faqs_published_order_idx" ON "faqs" ("published", "order");
+
+-- ---------- courses (video courses, Aparat-hosted) ----------
+DO $$ BEGIN
+  CREATE TYPE "AccessType" AS ENUM ('FREE', 'PAID');
+EXCEPTION WHEN duplicate_object THEN null; END $$;
+
+CREATE TABLE IF NOT EXISTS "courses" (
+  "id"          text PRIMARY KEY,
+  "slug"        text NOT NULL UNIQUE,
+  "title"       text NOT NULL,
+  "summary"     text NOT NULL,
+  "description" text,
+  "coverUrl"    text,
+  "accessType"  "AccessType" NOT NULL DEFAULT 'FREE',
+  "price"       integer,
+  "published"   boolean NOT NULL DEFAULT false,
+  "order"       integer NOT NULL DEFAULT 0,
+  "createdAt"   timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "updatedAt"   timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS "courses_published_order_idx" ON "courses" ("published", "order");
+
+CREATE TABLE IF NOT EXISTS "course_sections" (
+  "id"       text PRIMARY KEY,
+  "courseId" text NOT NULL REFERENCES "courses"("id") ON DELETE CASCADE,
+  "title"    text NOT NULL,
+  "order"    integer NOT NULL DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS "course_sections_courseId_order_idx" ON "course_sections" ("courseId", "order");
+
+CREATE TABLE IF NOT EXISTS "lessons" (
+  "id"            text PRIMARY KEY,
+  "courseId"      text NOT NULL REFERENCES "courses"("id") ON DELETE CASCADE,
+  "sectionId"     text REFERENCES "course_sections"("id") ON DELETE SET NULL,
+  "title"         text NOT NULL,
+  "aparatHash"    text NOT NULL,
+  "durationSec"   integer,
+  "isFreePreview" boolean NOT NULL DEFAULT false,
+  "order"         integer NOT NULL DEFAULT 0,
+  "createdAt"     timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS "lessons_courseId_order_idx" ON "lessons" ("courseId", "order");

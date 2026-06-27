@@ -5,6 +5,7 @@
 ## صفحات اصلی
 - [خانه](https://www.arshinkids.com)
 - [برنامه‌ها](https://www.arshinkids.com/programs)
+- [دوره‌های ویدیویی](https://www.arshinkids.com/courses)
 - [درباره ما](https://www.arshinkids.com/about)
 - [اخبار](https://www.arshinkids.com/news)
 - [گالری](https://www.arshinkids.com/gallery)

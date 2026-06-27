@@ -9,6 +9,7 @@ import {
   Users,
   Images,
   Newspaper,
+  GraduationCap,
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -20,6 +21,7 @@ const items: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/admin/staff", label: "کادر آموزشی", icon: Users },
   { href: "/admin/gallery", label: "گالری", icon: Images },
   { href: "/admin/news", label: "اخبار", icon: Newspaper },
+  { href: "/admin/courses", label: "دوره‌ها", icon: GraduationCap },
 ];
 
 export function AdminNav() {

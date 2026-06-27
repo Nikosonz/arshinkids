@@ -15,7 +15,7 @@ export interface UploadImageState {
   error?: string;
 }
 
-const FOLDERS = new Set(["staff", "news", "programs", "uploads"]);
+const FOLDERS = new Set(["staff", "news", "programs", "courses", "uploads"]);
 
 export async function uploadImage(
   _prev: UploadImageState,
