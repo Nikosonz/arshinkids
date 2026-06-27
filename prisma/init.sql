@@ -144,3 +144,40 @@ CREATE TABLE IF NOT EXISTS "lessons" (
   "createdAt"     timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 CREATE INDEX IF NOT EXISTS "lessons_courseId_order_idx" ON "lessons" ("courseId", "order");
+
+-- ---------- customers / orders / enrollments (Phase B: accounts + Zarinpal) ----------
+DO $$ BEGIN
+  CREATE TYPE "OrderStatus" AS ENUM ('PENDING', 'PAID', 'FAILED');
+EXCEPTION WHEN duplicate_object THEN null; END $$;
+
+CREATE TABLE IF NOT EXISTS "customers" (
+  "id"           text PRIMARY KEY,
+  "email"        text NOT NULL UNIQUE,
+  "passwordHash" text NOT NULL,
+  "name"         text,
+  "phone"        text UNIQUE,
+  "createdAt"    timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS "orders" (
+  "id"         text PRIMARY KEY,
+  "customerId" text NOT NULL REFERENCES "customers"("id") ON DELETE CASCADE,
+  "courseId"   text NOT NULL REFERENCES "courses"("id") ON DELETE CASCADE,
+  "amount"     integer NOT NULL,
+  "status"     "OrderStatus" NOT NULL DEFAULT 'PENDING',
+  "authority"  text UNIQUE,
+  "refId"      text,
+  "createdAt"  timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "paidAt"     timestamp(3)
+);
+CREATE INDEX IF NOT EXISTS "orders_customerId_createdAt_idx" ON "orders" ("customerId", "createdAt");
+
+CREATE TABLE IF NOT EXISTS "enrollments" (
+  "id"         text PRIMARY KEY,
+  "customerId" text NOT NULL REFERENCES "customers"("id") ON DELETE CASCADE,
+  "courseId"   text NOT NULL REFERENCES "courses"("id") ON DELETE CASCADE,
+  "orderId"    text UNIQUE REFERENCES "orders"("id") ON DELETE SET NULL,
+  "createdAt"  timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE ("customerId", "courseId")
+);
+CREATE INDEX IF NOT EXISTS "enrollments_customerId_idx" ON "enrollments" ("customerId");

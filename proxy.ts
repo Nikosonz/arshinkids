@@ -26,6 +26,21 @@ export async function proxy(req: NextRequest) {
     }
   }
 
+  // customer account gate (login/register stay public)
+  if (
+    pathname.startsWith("/account") &&
+    pathname !== "/account/login" &&
+    pathname !== "/account/register"
+  ) {
+    const session = await decrypt(req.cookies.get("customer_session")?.value);
+    if (session?.role !== "customer") {
+      const url = req.nextUrl.clone();
+      url.pathname = "/account/login";
+      url.searchParams.set("next", pathname);
+      return NextResponse.redirect(url);
+    }
+  }
+
   return NextResponse.next();
 }
 

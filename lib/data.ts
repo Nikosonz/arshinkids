@@ -110,3 +110,32 @@ export function getCourse(slug: string) {
     null,
   );
 }
+
+/** True if the customer owns (is enrolled in) the given course. */
+export function isEnrolled(customerId: string, courseId: string) {
+  return safe(
+    async () =>
+      (await prisma.enrollment.count({
+        where: { customerId, courseId },
+      })) > 0,
+    false,
+  );
+}
+
+/** Courses a customer has access to (their dashboard). */
+export function getEnrolledCourses(customerId: string) {
+  return safe(
+    () =>
+      prisma.course
+        .findMany({
+          where: { enrollments: { some: { customerId } } },
+          orderBy: { order: "asc" },
+          include: { _count: { select: { lessons: true } } },
+        }),
+    [],
+  );
+}
+
+export function getCustomer(id: string) {
+  return safe(() => prisma.customer.findUnique({ where: { id } }), null);
+}

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
 import { navLinks } from "@/lib/nav";
 import { business } from "@/lib/business";
 import { cn } from "@/lib/utils";
@@ -49,7 +49,14 @@ export function SiteHeader() {
           ))}
         </ul>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-2 md:flex">
+          <Link
+            href="/account"
+            className="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium text-[var(--text-muted)] transition-colors hover:text-[var(--text-primary)]"
+          >
+            <User className="h-4 w-4" />
+            حساب من
+          </Link>
           <Link
             href="/contact"
             className="rounded-full bg-[var(--accent)] px-5 py-2 text-sm font-semibold text-[var(--accent-contrast)] transition-colors hover:bg-[var(--accent-hover)]"
@@ -89,6 +96,16 @@ export function SiteHeader() {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link
+                href="/account"
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-2 rounded-xl px-4 py-3 font-medium text-[var(--text-muted)]"
+              >
+                <User className="h-5 w-5" />
+                حساب من
+              </Link>
+            </li>
             <li>
               <Link
                 href="/contact"

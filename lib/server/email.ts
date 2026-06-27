@@ -64,3 +64,30 @@ export async function sendLeadEmail(data: LeadEmailData): Promise<void> {
     html,
   });
 }
+
+/** Purchase confirmation to the customer after a verified course payment. */
+export async function sendEnrollmentEmail(params: {
+  to: string;
+  courseTitle: string;
+  refId?: string;
+}): Promise<void> {
+  if (!resend) {
+    console.warn("[email] RESEND_API_KEY missing — skipping enrollment email");
+    return;
+  }
+
+  const html = `
+    <div dir="rtl" style="font-family:Tahoma,sans-serif;line-height:1.8">
+      <h2>خرید شما با موفقیت انجام شد ✅</h2>
+      <p>دوره‌ی «${esc(params.courseTitle)}» به حساب شما اضافه شد.</p>
+      ${params.refId ? `<p>کد پیگیری پرداخت: <b>${esc(params.refId)}</b></p>` : ""}
+      <p>برای مشاهده‌ی دوره وارد حساب کاربری خود شوید.</p>
+    </div>`;
+
+  await resend.emails.send({
+    from: `${business.nameLatin} <onboarding@resend.dev>`,
+    to: params.to,
+    subject: `خرید دوره — ${params.courseTitle}`,
+    html,
+  });
+}

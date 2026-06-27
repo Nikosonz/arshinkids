@@ -33,3 +33,21 @@ export const loginSchema = z.object({
   email: z.string().trim().email("ایمیل معتبر نیست"),
   password: z.string().min(1, "رمز عبور را وارد کنید"),
 });
+
+// --- customer (end-user) auth ---
+export const customerLoginSchema = z.object({
+  email: z.string().trim().toLowerCase().email("ایمیل معتبر نیست"),
+  password: z.string().min(1, "رمز عبور را وارد کنید"),
+});
+
+export const customerRegisterSchema = z.object({
+  name: z.string().trim().min(2, "نام را وارد کنید").max(80, "نام طولانی است"),
+  email: z.string().trim().toLowerCase().email("ایمیل معتبر نیست"),
+  phone: z
+    .string()
+    .trim()
+    .regex(phoneRegex, "شماره موبایل معتبر نیست")
+    .optional()
+    .or(z.literal("")),
+  password: z.string().min(6, "رمز عبور باید حداقل ۶ کاراکتر باشد").max(100),
+});

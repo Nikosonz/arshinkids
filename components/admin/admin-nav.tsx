@@ -10,6 +10,7 @@ import {
   Images,
   Newspaper,
   GraduationCap,
+  Receipt,
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -22,6 +23,7 @@ const items: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/admin/gallery", label: "گالری", icon: Images },
   { href: "/admin/news", label: "اخبار", icon: Newspaper },
   { href: "/admin/courses", label: "دوره‌ها", icon: GraduationCap },
+  { href: "/admin/orders", label: "سفارش‌ها", icon: Receipt },
 ];
 
 export function AdminNav() {

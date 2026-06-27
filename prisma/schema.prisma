@@ -140,8 +140,10 @@ model Course {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 
-  sections CourseSection[]
-  lessons  Lesson[]
+  sections    CourseSection[]
+  lessons     Lesson[]
+  orders      Order[]
+  enrollments Enrollment[]
 
   @@index([published, order])
   @@map("courses")
@@ -182,4 +184,62 @@ model Lesson {
 
   @@index([courseId, order])
   @@map("lessons")
+}
+
+/// End-customer accounts (separate from AdminUser). Email+password now;
+/// phone+OTP later (Phase C). CLAUDE.md §5.
+model Customer {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  phone        String?  @unique
+  createdAt    DateTime @default(now())
+
+  orders      Order[]
+  enrollments Enrollment[]
+
+  @@map("customers")
+}
+
+/// A purchase attempt for a course (Zarinpal).
+model Order {
+  id         String      @id @default(cuid())
+  customerId String
+  customer   Customer    @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  courseId   String
+  course     Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  amount     Int // Toman
+  status     OrderStatus @default(PENDING)
+  authority  String?     @unique // Zarinpal authority token
+  refId      String? // Zarinpal reference id (on success)
+  createdAt  DateTime    @default(now())
+  paidAt     DateTime?
+
+  enrollment Enrollment?
+
+  @@index([customerId, createdAt])
+  @@map("orders")
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  FAILED
+}
+
+/// Access grant: a customer owns a course (created on verified payment).
+model Enrollment {
+  id         String   @id @default(cuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  courseId   String
+  course     Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  orderId    String?  @unique
+  order      Order?   @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  createdAt  DateTime @default(now())
+
+  @@unique([customerId, courseId])
+  @@index([customerId])
+  @@map("enrollments")
 }

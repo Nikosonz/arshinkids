@@ -6,11 +6,12 @@ import { PlayCircle, Lock, ShoppingCart } from "lucide-react";
 import { Container } from "@/components/container";
 import { VideoEmbed } from "@/components/video-embed";
 import { JsonLd } from "@/lib/seo";
-import { getCourse } from "@/lib/data";
+import { getCourse, isEnrolled } from "@/lib/data";
+import { getCustomerId } from "@/lib/customer-session";
 import { SITE_URL } from "@/lib/business";
 import { formatPrice, toFa, decodeSlug } from "@/lib/utils";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -71,7 +72,10 @@ export default async function CourseDetailPage({ params }: Params) {
   if (!course) notFound();
 
   const paid = course.accessType === "PAID";
-  const isPlayable = (l: Lesson) => !paid || l.isFreePreview;
+  const customerId = await getCustomerId();
+  const enrolled =
+    paid && customerId ? await isEnrolled(customerId, course.id) : false;
+  const isPlayable = (l: Lesson) => !paid || enrolled || l.isFreePreview;
   const looseLessons = course.lessons.filter((l) => !l.sectionId);
 
   return (
@@ -144,7 +148,13 @@ export default async function CourseDetailPage({ params }: Params) {
           </div>
         )}
 
-        {paid && (
+        {paid && enrolled && (
+          <div className="mt-8 rounded-3xl border border-green-200 bg-green-50 p-6 text-center font-semibold text-green-700">
+            شما به این دوره دسترسی دارید. درس‌ها را در ادامه ببینید.
+          </div>
+        )}
+
+        {paid && !enrolled && (
           <div className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-border bg-[var(--surface-2)] p-6">
             <div>
               <div className="text-sm text-[var(--text-muted)]">قیمت دوره</div>
