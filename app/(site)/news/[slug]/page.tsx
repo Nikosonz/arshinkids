@@ -4,13 +4,13 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/container";
 import { getPost } from "@/lib/data";
-import { formatDate } from "@/lib/utils";
+import { formatDate, decodeSlug } from "@/lib/utils";
 
 type Params = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const post = await getPost(slug);
+  const post = await getPost(decodeSlug(slug));
   if (!post) return { title: "خبر یافت نشد" };
   return {
     title: post.title,
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function PostPage({ params }: Params) {
   const { slug } = await params;
-  const post = await getPost(slug);
+  const post = await getPost(decodeSlug(slug));
   if (!post) notFound();
 
   return (

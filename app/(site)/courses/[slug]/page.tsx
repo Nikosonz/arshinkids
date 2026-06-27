@@ -8,7 +8,7 @@ import { VideoEmbed } from "@/components/video-embed";
 import { JsonLd } from "@/lib/seo";
 import { getCourse } from "@/lib/data";
 import { SITE_URL } from "@/lib/business";
-import { formatPrice, toFa } from "@/lib/utils";
+import { formatPrice, toFa, decodeSlug } from "@/lib/utils";
 
 export const revalidate = 300;
 
@@ -16,7 +16,7 @@ type Params = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const course = await getCourse(slug);
+  const course = await getCourse(decodeSlug(slug));
   if (!course) return { title: "دوره یافت نشد" };
   return {
     title: course.title,
@@ -67,7 +67,7 @@ function LessonRow({
 
 export default async function CourseDetailPage({ params }: Params) {
   const { slug } = await params;
-  const course = await getCourse(slug);
+  const course = await getCourse(decodeSlug(slug));
   if (!course) notFound();
 
   const paid = course.accessType === "PAID";

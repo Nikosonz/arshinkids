@@ -12,6 +12,19 @@ export function toFa(input: string | number): string {
   return String(input).replace(/[0-9]/g, (d) => fa[Number(d)]);
 }
 
+/**
+ * Safely percent-decode a dynamic route slug. Next.js does NOT decode non-ASCII
+ * params, so a Persian slug arrives as "%D9%82…" and won't match the stored
+ * value — decode it before the DB lookup. No-op for already-decoded slugs.
+ */
+export function decodeSlug(slug: string): string {
+  try {
+    return decodeURIComponent(slug);
+  } catch {
+    return slug;
+  }
+}
+
 /** Convert Persian/Arabic-Indic digits in a string to Latin digits. */
 export function faToEn(input: string): string {
   return input

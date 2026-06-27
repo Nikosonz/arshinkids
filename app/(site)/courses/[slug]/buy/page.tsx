@@ -5,7 +5,7 @@ import { Clock, ArrowRight } from "lucide-react";
 import { Container } from "@/components/container";
 import { getCourse } from "@/lib/data";
 import { business } from "@/lib/business";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, decodeSlug } from "@/lib/utils";
 
 export const revalidate = 300;
 
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function BuyCoursePage({ params }: Params) {
   const { slug } = await params;
-  const course = await getCourse(slug);
+  const course = await getCourse(decodeSlug(slug));
   if (!course || course.accessType !== "PAID") notFound();
 
   // Payments go live in Phase B once a Zarinpal merchant id is configured.

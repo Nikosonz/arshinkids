@@ -6,12 +6,13 @@ import { ArrowLeft } from "lucide-react";
 import { Container } from "@/components/container";
 import { ProgramIcon, colorVar } from "@/lib/icons";
 import { getProgram } from "@/lib/data";
+import { decodeSlug } from "@/lib/utils";
 
 type Params = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const program = await getProgram(slug);
+  const program = await getProgram(decodeSlug(slug));
   if (!program) return { title: "برنامه یافت نشد" };
   return {
     title: program.title,
@@ -22,7 +23,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function ProgramDetailPage({ params }: Params) {
   const { slug } = await params;
-  const program = await getProgram(slug);
+  const program = await getProgram(decodeSlug(slug));
   if (!program) notFound();
 
   const c = colorVar(program.color);
